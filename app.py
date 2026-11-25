@@ -3,7 +3,6 @@ import pandas as pd
 import plotly.express as px
 
 st.title("Student Budget Tracker")
-
 file = st.file_uploader("Upload your transactions CSV", type="csv")
 
 if file:
@@ -17,3 +16,8 @@ if file:
     by_day = df.groupby("date")["amount"].sum().reset_index()
     fig = px.line(by_day, x="date", y="amount", title="Spending Over Time")
     st.plotly_chart(fig)
+
+    total = df["amount"].sum()
+    top = by_cat.sort_values("amount", ascending=False).iloc[0]
+    share = top["amount"] / total * 100
+    st.info(f"{top['category']} is your biggest category: {share:.0f}% of your spending.")
