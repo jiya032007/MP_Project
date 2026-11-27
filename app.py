@@ -11,6 +11,8 @@ if file:
 
     by_cat = df.groupby("category")["amount"].sum().reset_index()
     st.plotly_chart(px.pie(by_cat, names="category", values="amount"))
+    st.plotly_chart(px.pie(by_cat, names="category", values="amount",
+                       color_discrete_sequence=px.colors.sequential.RdPu))
 
     df["date"] = pd.to_datetime(df["date"])
     by_day = df.groupby("date")["amount"].sum().reset_index()
